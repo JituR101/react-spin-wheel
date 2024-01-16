@@ -16,9 +16,9 @@ export function isTouchScreendevice() {
 export function getFormattedResult(selectedIndex: number) {
   const currentTimestamp = new Date();
   const resultData = {
-    web_client: 'mobile-pwa',
+    webclient: 'mobile-pwa',
     timestamp: currentTimestamp,
-    spin_result_index: selectedIndex,
+    spinResultIndex: selectedIndex,
   };
   return resultData;
 }

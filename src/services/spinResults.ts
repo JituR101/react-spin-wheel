@@ -1,25 +1,40 @@
 interface ResultData {
-  web_client: string;
+  webclient: string;
   timestamp: Date;
-  spin_result_index: number;
+  spinResultIndex: number;
 }
 
 export const setResults = (data: ResultData) => {
-  fetch('https://sheet.best/api/sheets/77de7d82-5df3-41d8-91c3-980bf04b04c4', {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
+  // Wrap the ResultData object inside a root property 'sheet1'
+  const requestData = {
+    sheet1: {
+      ...data,
+      email: 'shreedhar@xoxoday.com',
     },
-    body: JSON.stringify(data),
-  })
-    .then(r => r.json())
-    .then(data => {
-      // The response comes here
-      console.log(data);
+  };
+
+  fetch(
+    'https://api.sheety.co/17267ff37d62e285ee88e1cead7a5f36/spinTheWheelTest/sheet1',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    },
+  )
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(json => {
+      // Do something with the response object
+      console.log(json.sheet1);
     })
     .catch(error => {
-      // Errors are reported there
-      console.log(error);
+      // Log and handle errors
+      console.error(error.message);
     });
 };
